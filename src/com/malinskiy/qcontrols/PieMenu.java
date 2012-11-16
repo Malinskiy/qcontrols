@@ -29,16 +29,6 @@ public class PieMenu extends FrameLayout {
     private static final int MAX_LEVELS = 5;
     private static final long ANIMATION = 80;
 
-    public interface PieController {
-        /**
-         * called before menu opens to customize menu
-         * returns if pie state has been changed
-         */
-        public boolean onOpen();
-        public void stopEditingUrl();
-
-    }
-
     /**
      * A view like object that lives off of the pie menu
      */
@@ -67,7 +57,6 @@ public class PieMenu extends FrameLayout {
     private Path mPath;
 
     private boolean mOpen;
-    private PieController mController;
 
     private List<PieItem> mItems;
     private int mLevels;
@@ -141,10 +130,6 @@ public class PieMenu extends FrameLayout {
         mSubPaint.setColor(res.getColor(R.color.qc_sub));
     }
 
-    public void setController(PieController ctl) {
-        mController = ctl;
-    }
-
     public void setUseBackground(boolean useBackground) {
         mUseBackground = useBackground;
     }
@@ -181,13 +166,9 @@ public class PieMenu extends FrameLayout {
             mCurrentItem = null;
             mOpenItem = null;
             mPieView = null;
-            mController.stopEditingUrl();
             mCurrentItems = mItems;
             for (PieItem item : mCurrentItems) {
                 item.setSelected(false);
-            }
-            if (mController != null) {
-                boolean changed = mController.onOpen();
             }
             layoutPie();
             animateOpen();
