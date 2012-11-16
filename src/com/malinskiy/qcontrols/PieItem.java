@@ -1,6 +1,7 @@
 package com.malinskiy.qcontrols;
 
 import android.view.View;
+import com.malinskiy.qcontrols.PieMenu.PieView;
 
 import java.util.ArrayList;
 import java.util.List;
