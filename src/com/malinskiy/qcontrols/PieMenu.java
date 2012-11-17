@@ -595,5 +595,4 @@ public class PieMenu extends FrameLayout {
         && (item.getStartAngle() < polar.x)
         && (item.getStartAngle() + item.getSweep() > polar.x);
     }
-
 }

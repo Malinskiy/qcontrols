@@ -82,5 +82,4 @@ public class PieStackView extends BasePieView {
         final int ix = (y - mTop) * mViews.size() / mHeight;
         return ix;
     }
-
 }

@@ -7,9 +7,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Controller for Quick Controls pie menu
  */
