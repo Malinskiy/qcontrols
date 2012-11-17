@@ -1,4 +1,4 @@
-quick_controls
+QControls
 ==============
 
-This library has exactly the same look and fell of Android's quick controls found in Browser but with additional improvements for handling.
+This library contains classes that are exactly the same as Android's quick controls found in Browser but with additional improvements for handling.
