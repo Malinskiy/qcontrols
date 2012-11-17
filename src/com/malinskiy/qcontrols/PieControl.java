@@ -46,10 +46,8 @@ public class PieControl {
         }
     }
 
-    protected void setClickListener(OnClickListener listener, PieItem... items) {
-        for (PieItem item : items) {
-            item.getView().setOnClickListener(listener);
-        }
+    protected void setClickListener(PieItem item, OnClickListener listener) {
+        item.getView().setOnClickListener(listener);
     }
 
     protected void populateMenu() {
