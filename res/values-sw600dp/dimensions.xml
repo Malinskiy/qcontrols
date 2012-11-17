@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <dimen name="qc_radius_start">75dip</dimen>
+    <dimen name="qc_radius_increment">90dip</dimen>
+    <dimen name="qc_slop">15dip</dimen>
+    <dimen name="qc_touch_offset">15dip</dimen>
+    <dimen name="qc_tab_title_height">30dip</dimen>
+    <dimen name="qc_thumb_width">240dip</dimen>
+    <dimen name="qc_thumb_height">160dip</dimen>
+    <dimen name="qc_item_size">48dip</dimen>
+</resources>
