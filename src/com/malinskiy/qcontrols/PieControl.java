@@ -21,7 +21,7 @@ public class PieControl {
         mItemSize = (int) activity.getResources().getDimension(R.dimen.qc_item_size);
     }
 
-    protected void attachToContainer(ViewGroup container) {
+    public void attachToContainer(ViewGroup container) {
         if (mPie == null) {
             mPie = new PieMenu(mActivity);
             LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,
