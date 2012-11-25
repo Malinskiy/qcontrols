@@ -53,6 +53,11 @@ public class PieItem {
         mItems.add(item);
     }
 
+    public void addItems(List<PieItem> items) {
+        for(PieItem item: items)
+            addItem(item);
+    }
+
     public void setAlpha(float alpha) {
         if (mView != null) {
             mView.setAlpha(alpha);
