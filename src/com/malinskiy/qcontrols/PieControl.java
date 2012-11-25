@@ -36,7 +36,7 @@ public class PieControl {
         container.removeView(mPie);
     }
 
-    protected void forceToTop(ViewGroup container) {
+    public void forceToTop(ViewGroup container) {
         if (mPie.getParent() != null) {
             container.removeView(mPie);
             container.addView(mPie);
