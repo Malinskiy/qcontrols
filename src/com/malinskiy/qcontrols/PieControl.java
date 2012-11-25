@@ -43,7 +43,7 @@ public class PieControl {
         }
     }
 
-    protected void setClickListener(PieItem item, OnClickListener listener) {
+    public void setClickListener(PieItem item, OnClickListener listener) {
         item.getView().setOnClickListener(listener);
     }
 
