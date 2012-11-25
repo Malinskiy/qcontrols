@@ -9,7 +9,7 @@ Browser but with additional improvements for handling.
 Usage
 --------------------
 See sample activity code below:
-
+````java
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -98,3 +98,4 @@ public class TestActivity extends Activity {
         }
     }
 }
+````
