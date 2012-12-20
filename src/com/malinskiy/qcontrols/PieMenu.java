@@ -284,7 +284,6 @@ public class PieMenu extends FrameLayout {
                         canvas.rotate(r, mCenter.x, mCenter.y);
                         canvas.drawPath(mPath.get(i), p);
                         canvas.restoreToCount(statePath);
-                        //break;
                     }
                 }
             }
@@ -313,17 +312,9 @@ public class PieMenu extends FrameLayout {
             if (!mItems.contains(item)) {
                 p = item.isSelected() ? mSelectedPaint : mSubPaint;
             }
-            int state = canvas.save();
-            if (onTheLeft()) {
-                canvas.scale(-1, 1);
-            }
-            float r = getDegrees(item.getStartAngle()) - 270; // degrees(0)
-            canvas.rotate(r, mCenter.x, mCenter.y);
-
-            canvas.restoreToCount(state);
             // draw the item view
             View view = item.getView();
-            state = canvas.save();
+            int state = canvas.save();
             canvas.translate(view.getX(), view.getY());
             view.draw(canvas);
             canvas.restoreToCount(state);
@@ -517,10 +508,18 @@ public class PieMenu extends FrameLayout {
                 }
                 mCurrentItems = new ArrayList<PieItem>(mItems.size());
                 int i = 0, j = 0;
-                while (i < mItems.size()) {
+
+                int levelSize = 0;
+                for (PieItem localItem : mItems) {
+                    if (localItem.getLevel() == item.getLevel()) {
+                        levelSize++;
+                    }
+                }
+                while (i < levelSize) {
                     if (mItems.get(i) == item) {
                         mCurrentItems.add(item);
                     } else {
+                        if(j < item.getItems().size() )
                         mCurrentItems.add(item.getItems().get(j++));
                     }
                     i++;
