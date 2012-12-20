@@ -41,7 +41,7 @@ public class PieMenu extends FrameLayout {
         public void setLayoutListener(OnLayoutListener l);
 
         public void layout(int anchorX, int anchorY, boolean onleft, float angle,
-                int parentHeight);
+                           int parentHeight);
 
         public void draw(Canvas c);
 
@@ -54,7 +54,7 @@ public class PieMenu extends FrameLayout {
     private int mRadiusInc;
     private int mSlop;
     private int mTouchOffset;
-    private Path mPath;
+    private List<Path> mPath;
 
     private boolean mOpen;
 
@@ -117,7 +117,7 @@ public class PieMenu extends FrameLayout {
         mOpen = false;
         setWillNotDraw(false);
         setDrawingCacheEnabled(false);
-        mCenter = new Point(0,0);
+        mCenter = new Point(0, 0);
         mBackground = res.getDrawable(R.drawable.qc_background_normal);
         mNormalPaint = new Paint();
         mNormalPaint.setColor(res.getColor(R.color.qc_normal));
@@ -156,6 +156,7 @@ public class PieMenu extends FrameLayout {
 
     /**
      * guaranteed has center set
+     *
      * @param show
      */
     private void show(boolean show) {
@@ -182,13 +183,13 @@ public class PieMenu extends FrameLayout {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 for (PieItem item : mCurrentItems) {
-                    item.setAnimationAngle((1 - animation.getAnimatedFraction()) * (- item.getStart()));
+                    item.setAnimationAngle((1 - animation.getAnimatedFraction()) * (-item.getStart()));
                 }
                 invalidate();
             }
 
         });
-        anim.setDuration(2*ANIMATION);
+        anim.setDuration(2 * ANIMATION);
         anim.start();
     }
 
@@ -207,11 +208,12 @@ public class PieMenu extends FrameLayout {
         int inner = mRadius + rgap;
         int outer = mRadius + mRadiusInc - rgap;
         int gap = 1;
+        mPath = new ArrayList<Path>();
         for (int i = 0; i < mLevels; i++) {
             int level = i + 1;
             float sweep = (float) (Math.PI - 2 * emptyangle) / mCounts[level];
             float angle = emptyangle + sweep / 2;
-            mPath = makeSlice(getDegrees(0) - gap, getDegrees(sweep) + gap, outer, inner, mCenter);
+            mPath.add(makeSlice(getDegrees(0) - gap, getDegrees(sweep) + gap, outer, inner, mCenter));
             for (PieItem item : mCurrentItems) {
                 if (item.getLevel() == level) {
                     View view = item.getView();
@@ -245,7 +247,7 @@ public class PieMenu extends FrameLayout {
      * converts a
      *
      * @param angle from 0..PI to Android degrees (clockwise starting at 3
-     *        o'clock)
+     *              o'clock)
      * @return skia angle
      */
     private float getDegrees(double angle) {
@@ -268,6 +270,23 @@ public class PieMenu extends FrameLayout {
                 }
                 mBackground.draw(canvas);
                 canvas.restoreToCount(state);
+            }
+            for (int i = 0; i < mLevels; i++) {
+                int level = i + 1;
+                for (PieItem item : mCurrentItems) {
+                    if (item.getLevel() == level) {
+                        Paint p = item.isSelected() ? mSelectedPaint : mNormalPaint;
+                        int statePath = canvas.save();
+                        if (onTheLeft()) {
+                            canvas.scale(-1, 1);
+                        }
+                        float r = getDegrees(item.getStartAngle()) - 270; // degrees(0)
+                        canvas.rotate(r, mCenter.x, mCenter.y);
+                        canvas.drawPath(mPath.get(i), p);
+                        canvas.restoreToCount(statePath);
+                        //break;
+                    }
+                }
             }
             // draw base menu
             PieItem last = mCurrentItem;
@@ -300,7 +319,7 @@ public class PieMenu extends FrameLayout {
             }
             float r = getDegrees(item.getStartAngle()) - 270; // degrees(0)
             canvas.rotate(r, mCenter.x, mCenter.y);
-            canvas.drawPath(mPath, p);
+
             canvas.restoreToCount(state);
             // draw the item view
             View view = item.getView();
@@ -421,6 +440,7 @@ public class PieMenu extends FrameLayout {
     /**
      * enter a slice for a view
      * updates model only
+     *
      * @param item
      */
     private void onEnter(PieItem item) {
@@ -569,13 +589,12 @@ public class PieMenu extends FrameLayout {
         if (y > 0) {
             res.x = (float) Math.asin(x / res.y);
         } else if (y < 0) {
-            res.x = (float) (Math.PI - Math.asin(x / res.y ));
+            res.x = (float) (Math.PI - Math.asin(x / res.y));
         }
         return res;
     }
 
     /**
-     *
      * @param polar x: angle, y: dist
      * @return the item at angle/dist or null
      */
@@ -591,8 +610,8 @@ public class PieMenu extends FrameLayout {
 
     private boolean inside(PointF polar, float offset, PieItem item) {
         return (item.getInnerRadius() - offset < polar.y)
-        && (item.getOuterRadius() - offset > polar.y)
-        && (item.getStartAngle() < polar.x)
-        && (item.getStartAngle() + item.getSweep() > polar.x);
+                && (item.getOuterRadius() - offset > polar.y)
+                && (item.getStartAngle() < polar.x)
+                && (item.getStartAngle() + item.getSweep() > polar.x);
     }
 }
