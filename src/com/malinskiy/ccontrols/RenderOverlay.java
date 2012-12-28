@@ -52,8 +52,7 @@ public class RenderOverlay extends FrameLayout {
     public RenderOverlay(Context context, AttributeSet attrs) {
         super(context, attrs);
         mRenderView = new RenderView(context);
-        addView(mRenderView, new LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT));
+        addView(mRenderView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         mClients = new ArrayList<Renderer>(10);
         mTouchClients = new ArrayList<Renderer>(10);
         setWillNotDraw(false);
@@ -138,9 +137,9 @@ public class RenderOverlay extends FrameLayout {
         }
 
         @Override
-        public void layout(int left, int top, int right, int bottom) {
+        protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+            super.onLayout(changed, left, top, right, bottom);
             adjustPosition();
-            super.layout(left,  top, right, bottom);
             if (mClients == null) return;
             for (Renderer renderer : mClients) {
                 renderer.layout(left, top, right, bottom);

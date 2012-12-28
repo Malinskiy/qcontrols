@@ -21,6 +21,7 @@ package com.malinskiy.qcontrols;
 
 import android.view.View;
 import com.malinskiy.qcontrols.PieMenu.PieView;
+import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,13 +80,13 @@ public class PieItem {
 
     public void setAlpha(float alpha) {
         if (mView != null) {
-            mView.setAlpha(alpha);
+            ViewHelper.setAlpha(mView, alpha);
         }
     }
 
     public float getAlpha() {
         if (mView != null) {
-            return mView.getAlpha();
+            return ViewHelper.getAlpha(mView);
         }
         return 1;
     }

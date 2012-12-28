@@ -19,11 +19,6 @@
 
 package com.malinskiy.qcontrols;
 
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ValueAnimator;
-import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -39,6 +34,10 @@ import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
+import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -198,7 +197,7 @@ public class PieMenu extends FrameLayout {
 
     private void animateOpen() {
         ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
-        anim.addUpdateListener(new AnimatorUpdateListener() {
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 for (PieItem item : mCurrentItems) {
@@ -334,7 +333,7 @@ public class PieMenu extends FrameLayout {
             // draw the item view
             View view = item.getView();
             int state = canvas.save();
-            canvas.translate(view.getX(), view.getY());
+            canvas.translate(ViewHelper.getX(view), ViewHelper.getY(view));
             view.draw(canvas);
             canvas.restoreToCount(state);
         }
@@ -474,11 +473,11 @@ public class PieMenu extends FrameLayout {
 
     }
 
-    private void animateOut(final PieItem fixed, AnimatorListener listener) {
+    private void animateOut(final PieItem fixed, Animator.AnimatorListener listener) {
         if ((mCurrentItems == null) || (fixed == null)) return;
         final float target = fixed.getStartAngle();
         ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
-        anim.addUpdateListener(new AnimatorUpdateListener() {
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 for (PieItem item : mCurrentItems) {
@@ -495,11 +494,11 @@ public class PieMenu extends FrameLayout {
         anim.start();
     }
 
-    private void animateIn(final PieItem fixed, AnimatorListener listener) {
+    private void animateIn(final PieItem fixed, Animator.AnimatorListener listener) {
         if ((mCurrentItems == null) || (fixed == null)) return;
         final float target = fixed.getStartAngle();
         ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
-        anim.addUpdateListener(new AnimatorUpdateListener() {
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 for (PieItem item : mCurrentItems) {

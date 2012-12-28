@@ -18,8 +18,6 @@
 
 package com.malinskiy.ccontrols;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.*;
@@ -31,7 +29,10 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
-import com.malinskiy.qcontrols.R;
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
+import com.nineoldandroids.view.ViewHelper;
+import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -343,12 +344,12 @@ public class PieRenderer extends OverlayRenderer
 
     private void startFadeOut() {
         //Delete ApiHelper
-        mOverlay.animate().alpha(0).setListener(new AnimatorListenerAdapter() {
+        ViewPropertyAnimator.animate(mOverlay).alpha(0).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 deselect();
                 show(false);
-                mOverlay.setAlpha(1);
+                ViewHelper.setAlpha(mOverlay, 1);
                 super.onAnimationEnd(animation);
             }
         }).setDuration(PIE_SELECT_FADE_DURATION);
